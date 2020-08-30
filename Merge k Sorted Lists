@@ -1,0 +1,31 @@
+//https://leetcode.com/problems/merge-k-sorted-lists/
+bool cmp(ListNode *l1,ListNode *l2){
+    return l1->val > l2->val;
+ }
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists)
+    {
+        vector<ListNode*> validLists;
+        for(auto i:lists)
+            if(i) validLists.push_back(i);
+        ListNode *pre = new ListNode(-1);
+        ListNode *curr = pre;
+        make_heap(validLists.begin(),validLists.end(),cmp);
+        while(!validLists.empty())
+        {
+            ListNode *top = validLists.front();
+            pop_heap(validLists.begin(),validLists.end(),cmp);
+            validLists.pop_back();
+            curr->next = top;
+            curr = curr->next;
+            top = top->next;
+            if(top)
+            {
+                validLists.push_back(top);
+                push_heap(validLists.begin(),validLists.end(),cmp);
+            }
+        }
+        return pre->next;
+    }
+};
