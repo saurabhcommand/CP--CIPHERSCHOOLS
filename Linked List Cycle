@@ -1,0 +1,16 @@
+//https://leetcode.com/problems/linked-list-cycle/
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* ptr=head;
+        map<ListNode*,int>mp;
+        while(ptr!=NULL){
+            mp[ptr]++;
+            if(mp[ptr]==2)
+                return true;
+            ptr=ptr->next;
+        }
+        return false;
+        
+    }
+};
