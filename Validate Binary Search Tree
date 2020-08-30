@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(root==NULL)
+            return 1;
+        long long int prev=-21474836489898;
+        TreeNode* ptr=root;
+        stack<TreeNode*>s;
+        while(!s.empty() || ptr!=NULL)
+        {
+            while(ptr!=NULL)
+            {
+                s.push(ptr);
+                cout<<ptr->val<<" ";
+                ptr=ptr->left;
+            }
+            ptr=s.top();
+            // if(flag==0)
+            // {
+            //     flag=1;
+            //     prev=ptr->val;
+            // }
+            // else
+            // {
+            //     if(ptr->val<=prev)
+            //         return 0;
+            //     else
+            //         prev=ptr->val;
+            // }
+            //cout<<ptr->val;
+            if(ptr->val<=prev)
+                return 0;
+                prev=ptr->val;
+            s.pop();
+            ptr=ptr->right;
+        }
+        return 1;
+    }
+};
