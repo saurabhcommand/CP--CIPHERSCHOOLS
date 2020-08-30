@@ -1,0 +1,59 @@
+https://www.geeksforgeeks.org/find-the-largest-subtree-in-a-tree-that-is-also-a-bst/
+int count(Node* root,int* min_1,int* max_1,int* maxi,int* bst)
+{
+    if(root==NULL)
+    {
+        *bst =1;
+        return 0;
+    }
+    int fl =0;
+    int fr=0;
+    int min=INT_MAX;
+    *max_1=INT_MIN;
+    int ls=count(root->left,min_1,max_1,maxi,bst);
+    if(*bst==1&&*max_1<root->data)
+    {
+        fl=1;
+    }
+    min=*min_1;
+    *min_1=INT_MAX;
+    int lr=count(root->right,min_1,max_1,maxi,bst);
+    if(*bst==1&&*min_1>root->data)
+    {
+        fr=1;
+    }
+    if(min<*min_1)
+    {
+        *min_1=min;
+    }
+    if(root->data<*min_1)
+    *min_1=root->data;
+    if(root->data>*max_1)
+    *max_1=root->data;
+    if(fl==1&&fr==1)
+    {
+        if(ls+lr+1>*maxi)
+        {
+            *maxi=ls+lr+1;
+        }
+        return ls+lr+1;
+    }
+    else
+    {
+        *bst=0;
+        return 0;
+    }
+    
+}
+int largestBst(Node *root)
+{
+	//Your code here
+	
+	int min_1=INT_MAX;
+	int max_1=INT_MIN;
+	int maxi = 0;
+	int bst=0;
+	count(root,&min_1,&max_1,&maxi,&bst);
+	return maxi;
+	
+}
