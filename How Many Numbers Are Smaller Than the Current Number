@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        int ans[102]={0};
+        int n=nums.size();
+        for(int i=0;i<n;i++)
+            ans[nums[i]]++;
+        int sum=0;
+        for(int i=0;i<=100;i++)
+        {
+            int b=ans[i];
+            ans[i]=sum;
+            sum+=b;
+        }
+        for(int i=0;i<n;i++)
+        {
+            nums[i]=ans[nums[i]];
+        }
+        return nums;
+    }
+};
