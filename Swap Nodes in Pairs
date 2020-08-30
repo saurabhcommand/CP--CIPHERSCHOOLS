@@ -1,0 +1,39 @@
+https://leetcode.com/problems/swap-nodes-in-pairs/
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        ListNode* nex = head->next;
+        while(curr->next != NULL && nex->next != NULL){
+            ListNode* temp = nex->next;
+            nex->next = curr;
+            curr->next = temp;
+            if(prev == NULL){
+                head = nex;
+            }
+            else{
+                prev->next = nex;
+            }
+            prev = curr;
+            curr = curr->next;
+            nex = curr->next;
+        }
+        if(curr != NULL && nex != NULL){
+            if(prev == NULL){
+                nex->next = curr;
+                curr->next = NULL;
+                head = nex;
+            }
+            else{
+                nex->next = curr;
+                prev->next = nex;
+                curr->next = NULL;   
+            }
+        }
+        return head;      
+    }
+};
