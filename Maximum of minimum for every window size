@@ -1,0 +1,95 @@
+//https://www.geeksforgeeks.org/find-the-maximum-of-minimums-for-every-window-size-in-a-given-array/
+#include <bits/stdc++.h>
+using namespace std;
+void max_of_min(int *a,int n)
+{
+    int i;
+    stack<int> s;
+    int *nse = new int[n];
+    nse[n-1] = n;
+    s.push(n-1);
+    for(i=n-2;i>=0;i--)
+    {
+        while(s.size()&&a[i]<=a[s.top()])
+        {
+            s.pop();
+        }
+        if(s.size())
+        nse[i] = s.top();
+        else
+        nse[i] = n;
+        s.push(i);
+    }
+    
+    while(s.size())
+    {
+        s.pop();
+    }
+    int *pse = new int[n];
+    pse[0] = -1;
+    
+    s.push(0);
+    for(i=1;i<n;i++)
+    {
+        while(s.size()&&a[i]<=a[s.top()])
+        {
+            s.pop();
+        }
+        if(s.size())
+        pse[i] = s.top();
+        else
+        pse[i] = -1;
+        s.push(i);
+    }
+    
+    /*
+    for(i=0;i<n;i++)
+    {
+        cout<<nse[i]<<" ";
+    }
+    cout<<'\n';
+    
+    for(i=0;i<n;i++)
+    {
+        cout<<pse[i]<<" ";
+    }
+    cout<<'\n';
+    */
+    
+    int *max_min = new int[n+1];
+    
+    memset(max_min,0,sizeof(max_min));
+    for(i=0;i<n;i++)
+    {
+        int len = nse[i] - pse[i] - 1;
+        max_min[len] = max(a[i],max_min[len]);
+    }
+    
+    for(i=n-1;i>=0;i--)
+    {
+        max_min[i] = max(max_min[i],max_min[i+1]);
+    }
+    for(i=1;i<=n;i++)
+    {
+        cout<<max_min[i]<<" ";
+    }
+    cout<<'\n';
+}
+int main() {
+	
+	int t;
+	cin>>t;
+	
+	while(t--)
+	{
+	    int n,i;
+	    cin>>n;
+	    
+	    int *a = new int[n];
+	    for(i=0;i<n;i++)
+	    cin>>a[i];
+	    
+	    max_of_min(a,n);
+	}
+	return 0;
+}
