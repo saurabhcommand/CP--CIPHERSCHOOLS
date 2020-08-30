@@ -1,0 +1,36 @@
+https://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/
+void findMin(Node *root,Node *x,Node* &res)
+{
+    if(root==NULL)
+        return;
+    if(root==x)
+        return;
+    if(root->data > x->data)
+    {
+        res=root;
+        findMin(root->left,x,res);
+    }
+    else
+    {
+        findMin(root->right,x,res);
+    }
+}
+Node * inOrderSuccessor(Node *root, Node *x)
+{
+    //Your code here
+    Node *res=NULL;
+    if(x->right)
+    {
+        x=x->right;
+        while(x)
+        {
+            res=x;
+            x=x->left;
+        }
+    }
+    else
+    {
+        findMin(root,x,res);
+    }
+    return res;
+}
