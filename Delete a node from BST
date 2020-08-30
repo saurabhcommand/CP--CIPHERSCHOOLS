@@ -1,0 +1,50 @@
+//https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
+Node* deleteNode(Node* root, int x)
+{
+    if(root == NULL)
+    return NULL;
+    
+    if (x > root->data)
+    {
+        root->right = deleteNode(root->right, x);
+    }
+    else if (x < root->data)
+    {
+        root->left = deleteNode(root->left, x);
+    }
+    else
+    {
+        if (!root->right)
+        {
+        Node* temp = root->left;
+        delete root; return temp;
+        }
+        else if (!root->left)
+        {
+            Node* temp = root->right;
+            delete root; return temp;
+        }
+        else
+        {
+            Node *parent, *child;
+            parent = child = root->left;
+            int count = 0;
+            while (child->right) {
+            parent = child;
+            child = child->right;
+            count++;
+        }
+        root->data = child->data;
+        if (count == 0)
+        {
+            root->left = deleteNode(root->left, parent->data);
+        }
+        else
+        {
+            parent->right = child->left;
+            delete child;
+        }
+    }
+    }
+    return root;
+}
